@@ -1,22 +1,14 @@
-################################################################################
-# Copyright (C) 2012-2013 Leap Motion, Inc. All rights reserved.               #
-# Leap Motion proprietary and confidential. Not for distribution.              #
-# Use subject to the terms of the Leap Motion SDK Agreement available at       #
-# https://developer.leapmotion.com/sdk_agreement, or another agreement         #
-# between Leap Motion and you, your company or other organization.             #
-################################################################################
-
-import sys
+import sys, pyaudio
 
 sys.path.insert(0, "../lib")
 import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
 
-frameCounter = 0
 class SampleListener(Leap.Listener):
     finger_names = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky']
     bone_names = ['Metacarpal', 'Proximal', 'Intermediate', 'Distal']
     state_names = ['STATE_INVALID', 'STATE_START', 'STATE_UPDATE', 'STATE_END']
+    frameCounter = 0
 
     def on_init(self, controller):
         print("Initialized")
@@ -39,22 +31,22 @@ class SampleListener(Leap.Listener):
 
     def on_frame(self, controller):
         # Get the most recent frame and report some basic information
-        frameCounter = frameCounter + 1
-        print("FRAMECOUNTER == " + str(frameCounter))
-        if frameCounter/20 == 1:
+        self.frameCounter += 1
+        if self.frameCounter%200 == 0:
+            print("FRAMECOUNTER == " + str(self.frameCounter))
             frame = controller.frame()
 
-            print("Frame id: %d, timestamp: %d, hands: %d, fingers: %d, tools: %d, gestures: %d") % (
-                frame.id, frame.timestamp, len(frame.hands), len(frame.fingers), len(frame.tools), len(frame.gestures()))
+            # print("Frame id: %d, timestamp: %d, hands: %d, fingers: %d, tools: %d, gestures: %d") % (
+            #     frame.id, frame.timestamp, len(frame.hands), len(frame.fingers), len(frame.tools), len(frame.gestures()))
 
             # Get hands
             for hand in frame.hands:
 
                 handType = "Left hand" if hand.is_left else "Right hand"
 
-                print("  %s, id %d, position: %s") % (
-                    handType, hand.id, hand.palm_position)
-
+                # print("  %s, id %d, position: %s") % (
+                #     handType, hand.id, hand.palm_position)
+                print(hand.palm_position[1])
                 # Get the hand's normal vector and direction
                 normal = hand.palm_normal
                 direction = hand.direction
