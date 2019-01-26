@@ -1,8 +1,6 @@
-import pygame, sys
+
 
 import sys, pygame, winsound
-
-import sys, pygame
 pygame.init()
 
 size = width, height = 800, 500
