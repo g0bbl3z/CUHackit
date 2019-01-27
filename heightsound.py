@@ -1,7 +1,3 @@
-import pygame, sys
-
-import sys, pygame, winsound
-
 import sys, pygame
 pygame.init()
 
@@ -25,7 +21,8 @@ while 1:
                 if event.key == pygame.K_ESCAPE:
                         sys.exit()
 
-        winsound.Beep(300 + handheight, 100)
+        # winsound.Beep(300 + handheight, 100)
+        print(handheight)
         screen.fill(black)
         screen.blit(handSprite, (200, 400 - handheight))
         pygame.display.flip()
