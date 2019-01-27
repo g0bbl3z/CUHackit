@@ -7,7 +7,7 @@ size = width, height = 800, 500
 handheight = 50
 black = [0, 0 ,0]
 
-handSprite = pygame.image.load("resources/hand_sprite.png")
+handSprite = pygame.image.load("resources/hand_sprie.png")
 spriteRect = handSprite.get_rect()
 screen = pygame.display.set_mode(size)
 
