@@ -4,11 +4,15 @@ import sys
 
 
 class SampleListener(Leap.Listener):
-    # frameCounter = 0
-    height = 0
 
     def on_init(self, controller):
         print("Initialized")
+        pygame.init()
+        self.screen = pygame.display.set_mode((0,0))
+
+        self.handSprite = pygame.image.load("../resources/hand_sprite.png")
+        self.handHeight = 0
+
 
     def on_connect(self, controller):
         print("Connected")
@@ -28,15 +32,16 @@ class SampleListener(Leap.Listener):
 
     def on_frame(self, controller):
         # Get the most recent frame and report some basic information
-        # self.frameCounter += 1
-        # if self.frameCounter%200 == 0:
-        #     print("FRAMECOUNTER == " + str(self.frameCounter))
             frame = controller.frame()
-
             # Get hands
             for hand in frame.hands:
-                print(hand.palm_position[1])
-                self.height = hand.palm_position[1]
+                self.handHeight = int(hand.palm_position[1])
+                print(self.handHeight)
+                # winsound.Beep(300 + handheight, 100)
+                background = [0, 0, 0]
+                self.screen.fill(background)
+                self.screen.blit(self.handSprite, (200, 400 - self.handHeight))
+                pygame.display.flip()
 
 def main():
     # Create a sample listener and controller
