@@ -1,6 +1,8 @@
 import Leap
 import pygame
 import sys
+import array
+
 
 
 class SampleListener(Leap.Listener):
@@ -8,14 +10,10 @@ class SampleListener(Leap.Listener):
     def on_init(self, controller):
         print("Initialized")
         pygame.init()
-        self.screen = pygame.display.set_mode((0,0))
+        self.screen = pygame.display.set_mode((800,500))
 
         self.handSprite = pygame.image.load("../resources/hand_sprite.png")
         self.handHeight = 0
-
-        self.aMajor = pygame.mixer.Sound("resources/aMajor.mp3")
-        self.cMajor = pygame.mixer.Sound("resources/cMajor.mp3")
-        self.gMajor = pygame.mixer.Sound("resources/gMajor.mp3")
 
     def on_connect(self, controller):
         print("Connected")
@@ -40,17 +38,6 @@ class SampleListener(Leap.Listener):
             for hand in frame.hands:
                 self.handHeight = int(hand.palm_position[1])
                 print(self.handHeight)
-
-                #Sound Stuff
-                if self.handHeight > 380:
-                    pygame.mixer.Sound.play(self.cMajor)
-                    pygame.mixer.music.stop()
-                elif self.handHeight > 150:
-                    pygame.mixer.Sound.play(self.aMajor)
-                    pygame.mixer.music.stop()
-                else:
-                    pygame.mixer.Sound.play(self.gMajor)
-                    pygame.mixer.music.stop()
 
                 background = [0, 0, 0]
                 self.screen.fill(background)
